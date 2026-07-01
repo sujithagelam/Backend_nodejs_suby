@@ -8,16 +8,22 @@ const firmRoutes = require("./routes/firmRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cors = require("cors");
 const path = require("path");
+require("dotenv").config();
 
-dotenv.config();
-app.use(cors());
+console.log(process.env.MONGO_URI);
 mongoose
-  .connect("mongodb://localhost:27017/swiggy")
-  .then(() => console.log("mongo db connected sucesssfully"))
-  .catch((err) => console.log(err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => {
+    console.error("MongoDB Error:");
+    console.error(err.name);
+    console.error(err.message);
+    console.error(err);
+  });
+app.use(cors());
 app.use(bodyparser.json());
 app.use("/vendor", vendorRoutes);
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 app.use("/home", (req, res) => {
   res.send("welcome to suby");
 });

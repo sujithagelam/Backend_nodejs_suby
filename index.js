@@ -24,7 +24,7 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use("/vendor", vendorRoutes);
 const PORT = process.env.PORT || 4000;
-app.use("/home", (req, res) => {
+app.use("/", (req, res) => {
   res.send("welcome to suby");
 });
 app.use("/firm", firmRoutes);

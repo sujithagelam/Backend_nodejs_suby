@@ -58,10 +58,20 @@ const getProductByFirm = async (req, res) => {
 const deleteProductId = async (req, res) => {
   try {
     const productId = req.params.productId;
+    console.log("Product ID:", productId);
+
     const deleteProductId = await Product.findByIdAndDelete(productId);
+    // await Firm.findByIdAndUpdate({
+    //   $pull: { product: productId },
+    // });
+    console.log("Deleted:", deleteProductId);
     if (!deleteProductId) {
       return res.status(400).json({ error: "No product found" });
     }
+    return res.status(200).json({
+      message: "prodct deleted sucessfully",
+      deleteProductId,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: err.message });

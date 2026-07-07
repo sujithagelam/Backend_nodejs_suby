@@ -29,6 +29,7 @@ const vendorLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
     const vendor = await Vendor.findOne({ email });
+    console.log(vendor);
     if (!vendor || !(await bcrypt.compare(password, vendor.password)))
       return res.status(401).json({ err: "Invalid username or password" });
     const token = jwt.sign({ vendorId: vendor._id }, secretKey, {
@@ -36,7 +37,7 @@ const vendorLogin = async (req, res) => {
     });
     res
       .status(200)
-      .json({ success: "Login succsful", token, vendorId: vendor._id });
+      .json({ success: "Login succsful", token, vendorId: vendor._id, vendor });
     console.log(token);
     console.log(email);
   } catch (err) {
